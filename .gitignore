@@ -1,0 +1,21 @@
+# Çevre Değişkenleri
+.env
+
+# Node.js bağımlılıkları
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Derleme dosyaları
+/dist
+/build
+
+# IDE ve editör dosyaları
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
