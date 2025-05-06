@@ -448,34 +448,8 @@
     });
   }
   
-  // Konuşma geçmişi
-  let conversationHistory = [
-    { 
-      role: "system", 
-      content: `Sen "ShineBot" adında, ShineSteps görev yönetim uygulamasının yardım asistanısın. Görevin kullanıcılara uygulama hakkında bilgi vermek ve onlara yardımcı olmak.
-
-ShineSteps Bilgileri:
-- Görevler: Kullanıcılar görev ekleyebilir, düzenleyebilir ve tamamlayabilir.
-- Kategoriler: Eğitim, Spor/Sağlık, Kariyer, Kişisel Gelişim ve Hobi.
-- Öncelikler: Yüksek, Orta ve Düşük.
-- Zamanlayıcı: Görevler için bir zamanlayıcı kullanılabilir.
-- Başarılar: Kullanıcılar ilerleme durumlarına göre rozetler kazanabilir.
-- İstatistikler: Günlük ve haftalık görev istatistikleri görüntülenebilir.
-- Veri: Tüm veriler yerel depolamada (localStorage) saklanır.
-
-Temel Rozetler:
-- İlk Görev: İlk görevinizi tamamladığınızda kazanılır.
-- 5 Görev: 5 görev tamamlandığında kazanılır.
-- 3 Günlük Seri: Üst üste 3 gün görev tamamlandığında kazanılır.
-- Kategorilerde Uzman: Her kategoride en az bir görev tamamladığınızda kazanılır.
-- Öncelik Ustası: 5 yüksek öncelikli görev tamamladığınızda kazanılır.
-
-Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. Emojiler kullanabilirsin.`
-    }
-  ];
-  
-   // Yerel bilgi tabanı
-   const knowledgeBase = {
+  // Yerel bilgi tabanı
+  const knowledgeBase = {
     'shinesteps': 'ShineSteps, kişisel gelişim yolculuğunuzu izlemek ve organize etmek için tasarlanmış bir görev ve hedef yönetimi uygulamasıdır. Görevlerinizi ekleyebilir, kategorilere ayırabilir, zamanlayıcı ile çalışabilir ve tamamladıkça rozetler kazanabilirsiniz. Günlük, haftalık ve toplam ilerlemelerinizi istatistiklerle görebilirsiniz. Gelişiminizi ölçerek motivasyonunuzu arttırmak için tasarlanmıştır. 🌟',
     'görev': 'Görev eklemek için ana sayfadaki "Yeni Görev Ekle" formunu kullanabilirsiniz. Görev başlığı, açıklaması, kategorisi ve önceliğini belirleyerek yeni görev oluşturabilirsiniz. Görevlerinizi tamamladığınızda başarı rozetleri kazanabilirsiniz! 📝✅',
     'tamamla': 'Görevleri tamamlamak için görev kartı üzerindeki "Tamamla" butonuna tıklayabilirsiniz. İsterseniz zamanlayıcı ile çalışarak tamamlayabilirsiniz. Tamamlanan görevler, başarılarınıza eklenir ve istatistiklerinizi iyileştirir. 🏆',
@@ -496,7 +470,9 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     'uygulama': 'ShineSteps, kişisel gelişiminizi ve görevlerinizi takip etmek için tasarlanmış bir görev yönetimi uygulamasıdır. Görevler ekleyebilir, tamamlayabilir, zamanlayıcı kullanabilir ve başarılarınızı takip edebilirsiniz. Tamamen ücretsizdir ve verileriniz yerel olarak saklanır.',
     'hedef': 'ShineSteps\'te belirli hedeflere ulaşmak için görevler oluşturabilirsiniz. Örneğin, her gün 30 dakika kitap okumak gibi. Görevlerinizi kategorilere ayırıp öncelik belirleyerek hedeflerinize daha organize şekilde ilerleyebilirsiniz. Hedeflerinize ulaştıkça rozetler kazanırsınız!',
     'nedir': 'ShineSteps, kişisel gelişim yolculuğunuzu izlemek ve organize etmek için tasarlanmış bir görev ve hedef yönetimi uygulamasıdır. Görevlerinizi ekleyebilir, kategorilere ayırabilir, zamanlayıcı ile çalışabilir ve tamamladıkça rozetler kazanabilirsiniz. Günlük, haftalık ve toplam ilerlemelerinizi istatistiklerle görebilirsiniz. 🌟',
-    'başarılarım': 'Başarılarım bölümü, tamamladığınız görevleri ve kazandığınız rozetleri gösterir. Tamamladığınız her görev, ilerleme kaydetmenize ve yeni rozetler kazanmanıza yardımcı olur. Seri halinde görev tamamlama, farklı kategorilerde çalışma ve yüksek öncelikli görevleri bitirme gibi başarılar elde edebilirsiniz. 🏆'
+    'başarılarım': 'Başarılarım bölümü, tamamladığınız görevleri ve kazandığınız rozetleri gösterir. Tamamladığınız her görev, ilerleme kaydetmenize ve yeni rozetler kazanmanıza yardımcı olur. Seri halinde görev tamamlama, farklı kategorilerde çalışma ve yüksek öncelikli görevleri bitirme gibi başarılar elde edebilirsiniz. 🏆',
+    'github': 'ShineSteps\'in kaynak kodu GitHub\'da bulunmaktadır. Proje açık kaynaklıdır ve https://github.com/iamazra03/ShineSteps adresinden erişebilirsiniz. 👩‍💻',
+    'azra': 'Azra Cengiz, ShineSteps uygulamasının geliştiricisidir. GitHub\'da iamazra03 kullanıcı adıyla bulabilirsiniz. 👩‍💻'
   };
   
   // Mesaj gönderme işlemi
@@ -523,34 +499,12 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     addTypingIndicator();
     
     try {
-      // API'den yanıt alma işlemi
-      let response;
-      let useApiResponse = true;
+      // Yerel yanıt alma işlemi
+      const response = getLocalResponse(userMessage);
       
-      try {
-        try {
-          response = await fetchAPIResponse(userMessage);
-          console.log('[Chatbot] API yanıtı alındı');
-        } catch (apiError) {
-          console.warn('[Chatbot] API hatası:', apiError);
-          console.log('[Chatbot] Yerel yanıt sistemine geçiliyor...');
-          useApiResponse = false;
-          
-          // API hatası durumunda yerel yanıt sistemini kullan
-          response = getLocalResponse(userMessage);
-          
-          // Kullanıcıya API hatası olduğunu bildirmek istiyorsanız şu satırı ekleyebilirsiniz:
-          // addErrorMessage('API ile bağlantı kurulamadı, yerel yanıt sunuldu.');
-          
-          // Yerel yanıt için gerçekçi yazma süresi simüle et
-          const typingDuration = Math.min(1500, 800 + response.length * 5);
-          await new Promise(resolve => setTimeout(resolve, typingDuration));
-        }
-      } catch (finalError) {
-        console.error('[Chatbot] Tüm yanıt mekanizmaları başarısız:', finalError);
-        useApiResponse = false;
-        response = "Üzgünüm, şu anda yanıt veremiyorum. Lütfen daha sonra tekrar deneyin.";
-      }
+      // Gerçekçi yazma süresi simüle et
+      const typingDuration = Math.min(1500, 800 + response.length * 5);
+      await new Promise(resolve => setTimeout(resolve, typingDuration));
       
       // "Yazıyor..." göstergesini kaldır
       removeTypingIndicator();
@@ -590,84 +544,6 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     return "Üzgünüm, bu konuda bilgim yok. Size görevler, kategoriler, öncelikler, zamanlayıcı, rozetler veya istatistikler hakkında yardımcı olabilirim.";
   }
   
-  // API'den yanıt alma fonksiyonu
-  async function fetchAPIResponse(userMessage) {
-    console.log('[Chatbot] API isteği gönderiliyor...');
-    
-    // Kullanıcı mesajını geçmişe ekle
-    conversationHistory.push({ role: "user", content: userMessage });
-    
-    // Geçmişi yönet (çok uzun konuşmalardan kaçın)
-    if (conversationHistory.length > 10) {
-      const systemMessage = conversationHistory[0];
-      conversationHistory = [
-        systemMessage,
-        ...conversationHistory.slice(-9)
-      ];
-    }
-    
-    try {
-      console.log('[Chatbot] Gönderilen mesajlar:', JSON.stringify(conversationHistory));
-      
-            // Tam URL yolu kullan (tarayıcıdaki mevcut sayfa URL'sine göre)
-            const apiUrl = window.location.origin + '/api/chat';
-            const response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ messages: conversationHistory })
-            });
-            
-            console.log('[Chatbot] API istek URL:', apiUrl);
-      console.log('[Chatbot] API istek metodu:', 'POST');
-      
-      console.log('[Chatbot] API yanıt durumu:', response.status);
-      
-      if (!response.ok) {
-        try {
-          const errorData = await response.json();
-          console.error('[Chatbot] API hata yanıtı:', errorData);
-          throw new Error(errorData.error || 'API isteği başarısız oldu');
-        } catch (jsonError) {
-          console.error('[Chatbot] API yanıtı JSON olarak okunamadı:', jsonError);
-          const responseText = await response.text();
-          console.log('[Chatbot] Ham yanıt:', responseText || '(boş yanıt)');
-          throw new Error(`API isteği başarısız oldu (${response.status}): ${responseText || 'Yanıt boş'}`);
-        }
-      }
-      
-      const data = await response.json();
-      console.log('[Chatbot] API yanıtı alındı:', data);
-      
-      // Bot cevabını geçmişe ekle
-      let botResponse = '';
-      
-      if (data.message) {
-        if (typeof data.message === 'object' && data.message.content) {
-          botResponse = data.message.content;
-          conversationHistory.push({ role: "assistant", content: data.message.content });
-        } else if (typeof data.message === 'string') {
-          botResponse = data.message;
-          conversationHistory.push({ role: "assistant", content: data.message });
-        } else {
-          throw new Error('API yanıtı geçersiz format içeriyor');
-        }
-      } else {
-        throw new Error('API yanıtı message alanı içermiyor');
-      }
-      
-      console.log('[Chatbot] API yanıtı formatlandı:', botResponse.substring(0, 50) + '...');
-      return botResponse;
-    } catch (error) {
-      console.error('[Chatbot] API Hatası:', error);
-      // API hatası durumunda yerel yanıt kullan ve geçmişe ekle
-      const localResponse = getLocalResponse(userMessage);
-      conversationHistory.push({ role: "assistant", content: localResponse });
-      throw error; // Üst seviye fonksiyona fırlat
-    }
-  }
-  
   // Kullanıcı mesajı ekle
   function addUserMessage(text) {
     const messagesContainer = document.getElementById('chatbot-messages');
@@ -678,10 +554,13 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     
     const messageElement = document.createElement('div');
     messageElement.className = 'chatbot-message user';
+    
     messageElement.innerHTML = `
-      <div class="chatbot-bubble">${formatMessageText(text)}</div>
       <div class="chatbot-avatar user">
         <i class="fas fa-user"></i>
+      </div>
+      <div class="chatbot-bubble">
+        ${formatMessageText(text)}
       </div>
     `;
     
@@ -699,11 +578,14 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     
     const messageElement = document.createElement('div');
     messageElement.className = 'chatbot-message';
+    
     messageElement.innerHTML = `
       <div class="chatbot-avatar bot">
         <i class="fas fa-robot"></i>
       </div>
-      <div class="chatbot-bubble">${formatMessageText(text)}</div>
+      <div class="chatbot-bubble">
+        ${formatMessageText(text)}
+      </div>
     `;
     
     messagesContainer.appendChild(messageElement);
@@ -720,18 +602,21 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     
     const messageElement = document.createElement('div');
     messageElement.className = 'chatbot-message error';
+    
     messageElement.innerHTML = `
       <div class="chatbot-avatar error">
         <i class="fas fa-exclamation-triangle"></i>
       </div>
-      <div class="chatbot-bubble">${formatMessageText(text)}</div>
+      <div class="chatbot-bubble">
+        ${formatMessageText(text)}
+      </div>
     `;
     
     messagesContainer.appendChild(messageElement);
     scrollToBottom();
   }
   
-  // Yazıyor göstergesini ekle
+  // Yazıyor indikatörü ekle
   function addTypingIndicator() {
     const messagesContainer = document.getElementById('chatbot-messages');
     if (!messagesContainer) {
@@ -739,12 +624,14 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
       return;
     }
     
-    // Varsa önceki göstergeyi kaldır
-    removeTypingIndicator();
+    // Zaten varsa ekleme
+    if (document.querySelector('.chatbot-message.typing')) {
+      return;
+    }
     
     const typingElement = document.createElement('div');
-    typingElement.className = 'chatbot-message';
-    typingElement.id = 'chatbot-typing';
+    typingElement.className = 'chatbot-message typing';
+    
     typingElement.innerHTML = `
       <div class="chatbot-avatar bot">
         <i class="fas fa-robot"></i>
@@ -760,45 +647,40 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     scrollToBottom();
   }
   
-  // Yazıyor göstergesini kaldır
+  // Yazıyor indikatörünü kaldır
   function removeTypingIndicator() {
-    const typingElement = document.getElementById('chatbot-typing');
+    const typingElement = document.querySelector('.chatbot-message.typing');
     if (typingElement) {
       typingElement.remove();
     }
   }
   
-  // Mesaj metnini biçimlendir
+  // Mesaj metnini formatla
   function formatMessageText(text) {
     if (!text) return '';
     
-    // HTML etiketlerini temizle
-    const sanitizedText = text
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    // Satır sonlarını HTML'e çevir
+    let formattedText = text.replace(/\n/g, '<br>');
     
-    // Satır sonları (\n) için düzgün html yapısı oluştur
-    let formattedText = sanitizedText
-      // Paragraflar arası boş satırları işle
-      .replace(/\n\s*\n/g, '</p><p>')
-      // Diğer yeni satırları <br> ile değiştir
-      .replace(/\n/g, '<br>');
+    // URL'leri bağlantıya çevir
+    formattedText = formattedText.replace(
+      /(https?:\/\/[^\s]+)/g, 
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
     
-    // Metni paragraf tagları ile sarmala
-    formattedText = '<p>' + formattedText + '</p>';
+    // İncelemeleri vurgula (1-5 yıldız)
+    formattedText = formattedText.replace(
+      /(\d ?(yıldız|puan|star))/gi,
+      '<span class="emoji">⭐</span>$1'
+    );
     
-    // Markdown benzeri formatlamalar
-    return formattedText
-      // Bağlantılar
-      .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
-      // Kalın metin
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      // İtalik metin
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      // Listeler (• işaretini HTML'e uygun şekilde dönüştür)
-      .replace(/• (.*?)(<br>|<\/p>)/g, '<span class="list-item">• $1</span>$2')
-      // Emoji'leri vurgula
-      .replace(/([\uD800-\uDBFF][\uDC00-\uDFFF])/g, '<span class="emoji">$1</span>');
+    // Liste elemanlarını formatla
+    formattedText = formattedText.replace(
+      /^[•\-*]\s(.*)/gm,
+      '<span class="list-item">• $1</span>'
+    );
+    
+    return formattedText;
   }
   
   // Mesaj alanını en alta kaydır
@@ -809,32 +691,33 @@ Yanıtlarını kullanıcı dostu, kısa ve öz tut. Türkçe olarak yanıt ver. 
     }
   }
   
-  // Input'u devre dışı bırak veya etkinleştir
+  // Input alanını etkinleştir/devre dışı bırak
   function disableInput(disabled) {
+    const chatbotForm = document.getElementById('chatbot-form');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotSend = document.getElementById('chatbot-send');
-    const chatbotForm = document.querySelector('.chatbot-input-form');
     
-    if (!chatbotInput || !chatbotSend || !chatbotForm) {
-      console.error('[Chatbot] Input elementleri bulunamadı');
+    if (!chatbotForm || !chatbotInput || !chatbotSend) {
+      console.error('[Chatbot] Input elemanları bulunamadı');
       return;
     }
     
-    chatbotInput.disabled = disabled;
-    chatbotSend.disabled = disabled;
-    
     if (disabled) {
       chatbotForm.classList.add('disabled');
+      chatbotInput.disabled = true;
+      chatbotSend.disabled = true;
     } else {
       chatbotForm.classList.remove('disabled');
+      chatbotInput.disabled = false;
+      chatbotSend.disabled = false;
       chatbotInput.focus();
     }
   }
   
-  // Sayfa yüklendiğinde chatbot'u başlat
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeChatbot);
-  } else {
+  // Sayfada script yüklendiğinde chatbot'u başlat
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initializeChatbot();
+  } else {
+    document.addEventListener('DOMContentLoaded', initializeChatbot);
   }
 })();
